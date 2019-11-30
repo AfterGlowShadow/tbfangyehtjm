@@ -117,7 +117,7 @@ const api = {
   },
   // 商品管理
   async editGoodDetails(params) {
-    return await fetchs.post('app/admin/Tb.v1.Goodss.editAttr', qs.stringify(params), 1);
+    return await fetchs.post('app/admin/Tb.v1.Goodss.editM', qs.stringify(params), 1);
   },
   // 商品管理
   async deleteGoodDetails(params) {

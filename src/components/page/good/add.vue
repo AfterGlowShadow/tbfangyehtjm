@@ -150,11 +150,12 @@
                 if (code == 200) {
                     if(result != undefined && result.length!="" ){
                         this.form = result
+                        this.form.classifyid=this.form.classify;
                     }
                 } else {
                     this.$message.error(msg);
                 }
-
+                console.log(this.options)
             },
             submitForm() {
                 this.$refs.form.validate(async (valid) => {
@@ -167,12 +168,13 @@
                             })
                         }
                         if (valid) {
-                            let param = JSON.parse(JSON.stringify(this.form));
-                            if (this.form.id > 0) {
+                           if (this.form.id > 0) {
+                               let param = JSON.parse(JSON.stringify(this.form));
+                               param.specs=JSON.stringify(this.form.specs)
                                 let rest = await this.$axios.editGoodDetails(param);
                                 let {code, result, msg} = rest;
                                 if (code == 200) {
-                                    this.$message.success('添加成功');
+                                    this.$message.success('修改成功');
                                     this.showSure = false;
                                     this.init();
                                 } else {
@@ -184,20 +186,8 @@
                                 param.specs=JSON.stringify(this.form.specs)
                                 let rest = await this.$axios.addGoodDetails(param);
                                 let {code, result, msg} = rest;
-                                console.log(rest)
                                 if (code == 200) {
                                     this.$message.success('添加成功');
-                                    this.form={
-                                        pid: -1,
-                                        goodsname: '',
-                                        type: 0,
-                                        id: '',
-                                        title_desc: '',
-                                        is_show: 0,
-                                        content:'',
-                                        price: '',
-                                        specs:[]
-                                    };
                                     this.$router.push("/GoodList");
                                 } else {
                                     this.$message.error(msg);

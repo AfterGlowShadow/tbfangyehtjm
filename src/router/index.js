@@ -45,7 +45,7 @@ export default new Router({
         {
           path: '/OrderList',
           component: resolve => require(['../components/page/order/list.vue'], resolve),
-          meta: {title: '商品列表'}
+          meta: {title: '订单列表'}
         },
         {
           path: '/modifyPwd',
