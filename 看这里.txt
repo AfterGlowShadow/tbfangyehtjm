@@ -1,0 +1,36 @@
+vue-quill-editor  富文本编辑器修改  （上传图片）
+node_modules/_vue-quill-editor/node_modules/quill/dist/quill.js   ----6788行进行替换（自行修改上传图片接口 imgUrl  上传成功后图片访问链接 tempImgUrl）网络请求自行解决
+
+
+if (fileInput.files != null && fileInput.files[0] != null) {
+
+                 let imgUrl = window.HOST + '/img/uploadingImg';
+                 // let imgUrl = 'http://47.93.161.92:8080/education/img/uploadingImg';
+                  var formdata = new FormData();
+                  formdata.append('img', fileInput.files[0]);
+                  // 这里没有服务器供大家尝试，可将下面上传接口替换为你自己的服务器接口
+                  window.axios.post(imgUrl, formdata, {headers: { 'Content-Type': 'multipart/form-data' }})
+                      .then( (response)=> {
+                          let {
+                              data,msg,code
+                          }=response.data
+                          if(code == 200){
+                              var reader = new FileReader();
+                              reader.onload = function (e) {
+                                  // console.log(e);
+                                  let tempImgUrl = window.imgUrl + data;
+                                  var range = _this3.quill.getSelection(true);
+                                  _this3.quill.updateContents(new _quillDelta2.default().retain(range.index).delete(range.length).insert({ image: tempImgUrl }), _emitter2.default.sources.USER);
+                                  _this3.quill.setSelection(range.index + 1, _emitter2.default.sources.SILENT);
+                                  fileInput.value = "";
+                              };
+                              reader.readAsDataURL(fileInput.files[0]);
+                          }else{
+                              alert("失败")
+                          }
+                      })
+                      .catch( (error)=> {
+                          // console.log(error);
+                          alert("失败")
+                      });
+              }
