@@ -197,6 +197,25 @@
                     }
                 });
             }
+        },
+        watch: {
+            '$route.query'(params) {
+                if(params.id){
+                    this.init();
+                }else{
+                    this.form= {
+                        pid: -1,
+                        goodsname: '',
+                        type: 0,
+                        id: this.$route.query.id,
+                        title_desc: '',
+                        is_show: 0,
+                        content:'',
+                        price: '',
+                        specs:[]
+                    };
+                }
+            }
         }
     }
 </script>
